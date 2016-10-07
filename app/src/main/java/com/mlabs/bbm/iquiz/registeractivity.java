@@ -82,6 +82,7 @@ public class registeractivity extends AppCompatActivity {
                     popToast[0] = Toast.makeText(getApplicationContext(), null, Toast.LENGTH_SHORT);
                     popToast[0].setText("Account Successfully Created!");
                     popToast[0].show();
+                    finish();
                     Intent intent = new Intent(registeractivity.this, loginactivity.class);
                     startActivity(intent);
 
