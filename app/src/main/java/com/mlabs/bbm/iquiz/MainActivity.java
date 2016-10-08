@@ -23,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
                 public void onClick(View v) {
                     Intent intent = new Intent(MainActivity.this, On_Touch.class);
                     startActivity(intent);
+                    finish();
 
                 }
             });
