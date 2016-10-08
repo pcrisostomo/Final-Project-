@@ -1,94 +1,105 @@
 package com.mlabs.bbm.iquiz;
 
-        import android.os.Bundle;
-        import android.support.v7.app.AppCompatActivity;
-        import android.view.MotionEvent;
-        import android.view.View;
-        import android.widget.EditText;
-        import android.widget.ImageView;
 
-
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.view.MotionEvent;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.Toast;
 /**
- * Created by androidstudio on 10/09/16.
+ * Created by Pau on 10/8/2016.
  */
-public class On_Touch extends AppCompatActivity {
-    float x1, y1 , x2, y2, a, b;
-    String msg1 = "", msg2="";
-    ImageView imageLogo;
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.on_touch);
-        final EditText t1 = (EditText) findViewById(R.id.editText3);
-        final EditText t2 = (EditText) findViewById(R.id.editText4);
-        final EditText t3 = (EditText) findViewById(R.id.editText5);
-        final EditText t4 = (EditText) findViewById(R.id.editText7);
-        final EditText t5 = (EditText) findViewById(R.id.editText6);
-        t1.setKeyListener(null);
-        t2.setKeyListener(null);
-        t3.setKeyListener(null);
-        t4.setKeyListener(null);
-        t5.setKeyListener(null);
-        imageLogo = (ImageView) findViewById(R.id.imageView2);
-        imageLogo.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent event) {
-                switch (event.getAction()) {
-                    case MotionEvent.ACTION_DOWN:
-                        x1 = event.getX();
-                        y1 = event.getY();
-                        t1.setText(x1 + ","+y1);
-                    case MotionEvent.ACTION_UP:
-                        x2 = event.getX();
-                        y2= event.getY();
-                        t2.setText(x2 +","+y2);
-                        a=x1-x2;
-                        b=y1-y2;
-                        t3.setText(Math.abs(a) +","+Math.abs(b));
-                        if (a>0 & b>0 ){
-                            msg2="2nd Quadrant";
-                        }
-                        if (a>0 & b<0){
+public class On_Touch extends AppCompatActivity{
+        float x1, y1 , x2, y2, a, b;
+        String msg1 = "", msg2="";
+        ImageView imageLogo;
+        @Override
+        protected void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            setContentView(R.layout.on_touch);
+            final EditText txy = (EditText) findViewById(R.id.editText3);
+            final EditText txy2 = (EditText) findViewById(R.id.editText4);
+            final EditText tdiff = (EditText) findViewById(R.id.editText5);
+            final EditText tquadrant = (EditText) findViewById(R.id.editText6);
+            final EditText tmotion = (EditText) findViewById(R.id.editText7);
+            txy.setKeyListener(null);
+            txy2.setKeyListener(null);
+            tdiff.setKeyListener(null);
+            tquadrant.setKeyListener(null);
+            tmotion.setKeyListener(null);
 
-                            msg2="3rd Quadrant";
-                        }
-                        if (a<0 & b<0){
-                            msg2="4th Quadrant";
-                        }
-                        if (a<0 & b>0){
+            imageLogo = (ImageView) findViewById(R.id.imageView2);
+            imageLogo.setOnTouchListener(new View.OnTouchListener() {
+                float x,y,x1,y1;
 
-                            msg2="1st Quadrant";
-                        }
-                        if (y1 < y2 ) {
-                            msg1 +=" Swiped Bottom";
-                        }
-                        if(y1 > y2 ){
-                            msg1 +=" Swiped Up";
-                        }
-                        if (x1 > x2 ){
-                            msg1 +=" Swiped Left";
-                        }
-                        if (x1 < x2 ) {
+                @Override
+                public boolean onTouch(View view, MotionEvent e) {
 
-                            msg1 +=" Swiped Right";
-                        }
-                        t4.setText(msg1);
-                        msg1="";
-                        t5.setText(msg2);
-                        msg2="";
+                    String actionX = "";
+                    String actionY = "";
+                    String quadrant = "";
+
+                    switch (e.getAction()) {
+                        case MotionEvent.ACTION_DOWN:
+                            x = e.getX();
+                            y = e.getY();
+                            return true;
+                        case MotionEvent.ACTION_UP:
+                            float X = imageLogo.getRight()/2;
+                            float Y = imageLogo.getBottom()/2;
+
+                            x1=e.getX();
+                            y1=e.getY();
+
+                            actionX = "";
+                            actionY = "";
+                            quadrant = "";
+
+                            if (x<x1){
+                            if (x>x1){
+                                actionX = "Swiped right ";
+                            }
+                                actionX = "Swiped left. ";
+                            }
+                            if (y<y1){
+                                actionY = "Swiped down. ";
+                            }
+                            if (y>y1)
+                            {
+                                actionY = "Swiped up. ";
+                            }
+
+                            if(x1>X && y1>Y){
+                                quadrant = "Quadrant 4";
+                            }
+                            if(x1<X && y1>Y){
+                                quadrant = "Quadrant 3";
+                            }
+                            if(x1<X && y1<Y){
+                                quadrant = "Quadrant 2";
+                            }
+                            if(x1>X && y1<Y){
+                                quadrant = "Quadrant 1";
+                            }
+
+                            txy.setText(x + ", " + y);
+                            txy2.setText(x1 + ", " + y1);
+                            tdiff.setText(  (Math.abs(x1-x))+", "+ (Math.abs(y1-y)) );
+
+                            tmotion.setText(actionX + actionY);
+                            tquadrant.setText(quadrant);
+
+                    }
+                    return  false;
                 }
-                return true;
-            }
-        });
+
+
+            });
+        }
 
     }
-
-
-
-
-}
-
-
-
-
 

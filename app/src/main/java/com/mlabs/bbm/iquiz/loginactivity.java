@@ -54,6 +54,7 @@ public class loginactivity extends AppCompatActivity {
                     EmailAdd.setText("");
                     PassW.setText("");
                     finish();
+
                 }
                 else{
                     Toast.makeText(loginactivity.this, "Invalid Email or Password.", Toast.LENGTH_LONG).show();
